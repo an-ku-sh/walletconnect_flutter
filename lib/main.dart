@@ -30,8 +30,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(                                                  //Change the provider 
-      create: (context) => MetaMaskProvider()..init(),                              //create an instant 
+    return ChangeNotifierProvider(
+      //Change the provider
+      create: (context) => MetaMaskProvider()..init(), //create an instant
       builder: (context, child) {
         return Scaffold(
           backgroundColor: const Color(0xFF181818),
@@ -40,23 +41,24 @@ class _MyHomePageState extends State<MyHomePage> {
               Center(
                 child: Consumer<MetaMaskProvider>(
                   builder: (context, provider, child) {
-                    late final String text;                                               //check the state and display it 
+                    late final String text; //check the state and display it
 
                     if (provider.isConnected && provider.isInOperatingChain) {
-                      text = 'Connected';                                                 //connected 
+                      text = 'Connected'; //connected
                     } else if (provider.isConnected &&
                         !provider.isInOperatingChain) {
                       text =
-                          'Wrong chain. Please connect to ${MetaMaskProvider.operatingChain}';            //wrong chain, what chain it should be connected to 
+                          'Wrong chain. Please connect to ${MetaMaskProvider.operatingChain}'; //wrong chain, what chain it should be connected to
                     } else if (provider.isEnabled) {
                       return Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [ 
+                        children: [
                           const Text('Click the button...'),
                           const SizedBox(height: 8),
                           CupertinoButton(
-                            onPressed: () =>
-                                context.read<MetaMaskProvider>().connect(),                               //call metamask on click
+                            onPressed: () => context
+                                .read<MetaMaskProvider>()
+                                .connect(), //call metamask on click
                             color: Colors.white,
                             padding: const EdgeInsets.all(0),
                             child: Row(
@@ -72,10 +74,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       );
                     } else {
-                      text = 'Please use a Web3 supported browser.';                           //please use web3 supported browser
+                      text = 'Init error'; //please use web3 supported browser
                     }
 
-                    return ShaderMask(                                                          // a little bit of styling for text
+                    return ShaderMask(
+                      // a little bit of styling for text
                       shaderCallback: (bounds) => const LinearGradient(
                         colors: [Colors.purple, Colors.blue, Colors.red],
                       ).createShader(bounds),
